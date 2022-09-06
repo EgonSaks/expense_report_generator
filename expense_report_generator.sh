@@ -22,8 +22,12 @@ for file in $invoices; do
   
   costWithoutCurrency=$(echo ${cost:1}); 
   costWithoutCurrency=$(echo ${costWithoutCurrency%?}); 
-   
-  vatWithoutCurrency=$(echo ${vat:1}); 
+  
+  if [ -z "$vat" ]; then
+   vatWithoutCurrency=$(echo "0"); 
+  else
+   vatWithoutCurrency=$(echo ${vat:1});
+  fi
   
   totalCost=$(echo "scale=3;$totalCost+$costWithoutCurrency" | bc);
   totalVat=$(echo "scale=3;$totalVat+$vatWithoutCurrency" | bc);
